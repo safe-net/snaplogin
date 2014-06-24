@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140623182222) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "snap_logins", force: true do |t|
     t.string   "token",      null: false
     t.datetime "created_at"
