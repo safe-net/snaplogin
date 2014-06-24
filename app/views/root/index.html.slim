@@ -1,6 +1,6 @@
 - if current_user_session
   h2 Welcome #{current_user.name}
-  = button_to 'Log out', user_sessions_controller_destroy_path, method: :get
+  = button_to 'Log out', log_out_user_sessions_path, method: :get
 - else
   = form_for @user_session do |f|
     = f.label :email

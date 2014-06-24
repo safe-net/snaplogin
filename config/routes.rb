@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  get 'user_sessions_controller/new'
-
-  get 'user_sessions_controller/create'
-
-  get 'user_sessions_controller/destroy'
 
   get 'root/index'
 
