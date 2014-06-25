@@ -66,12 +66,12 @@ m5MMDrpDrRnn65G8FgfRQ1fK8dIM43BZYmC/UJ5xyFkAgPVXcO1m6g==
 
   # Principal is passed in when you `encode_response`
   #
-  # config.name_id_formats # =>
-  #   {                         # All 2.0
-  #     email_address: -> (principal) { principal.email_address },
-  #     transient: -> (principal) { principal.id },
-  #     persistent: -> (p) { p.id },
-  #   }
+  config.name_id_formats =
+    {                         # All 2.0
+      email_address: -> (principal) { principal.email },
+      transient: -> (principal) { principal.persistence_token },
+      persistent: -> (p) { p.persistence_token },
+    }
   #   OR
   #
   #   {
@@ -94,15 +94,15 @@ m5MMDrpDrRnn65G8FgfRQ1fK8dIM43BZYmC/UJ5xyFkAgPVXcO1m6g==
   #       }                                                                   # `principal.eduPersonAffiliation`, or no values will
   #    }                                                                      # be output
   #
-  ## EXAMPLE ##
-  # config.attributes = {
-  #   GivenName: {
-  #     getter: :first_name,
-  #   },
+  # EXAMPLE ##
+  config.attributes = {
+    GivenName: {
+      getter: :name,
+    },
   #   SurName: {
   #     getter: :last_name,
   #   },
-  # }
+  }
   ## EXAMPLE ##
 
   # config.technical_contact.company = "Example"

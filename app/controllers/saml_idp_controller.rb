@@ -1,7 +1,7 @@
 class SamlIdpController < SamlIdp::IdpController
   def idp_authenticate(email, password) # not using params intentionally
-    user = User.by_email(email).first
-    user && user.valid_password?(password) ? user : nil
+    user = User.find_by_email(email)
+    user && user.password == password ? user : nil
   end
   private :idp_authenticate
 
