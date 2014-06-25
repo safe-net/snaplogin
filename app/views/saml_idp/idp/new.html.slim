@@ -1,0 +1,27 @@
+- if @saml_idp_fail_msg
+  #saml_idp_fail_msg class="flash error" #{@saml_idp_fail_msg}
+
+= form_tag do
+  = hidden_field_tag('SAMLRequest', params[:SAMLRequest])
+  = hidden_field_tag('RelayState', params[:RelayState])
+
+  p
+    = label_tag :email
+    = email_field_tag :email, params[:email], :autocapitalize => 'off', :autocorrect => 'off', :autofocus => 'autofocus', :spellcheck => 'false', :size => 30, :class => 'email_pwd txt'
+
+  p
+    = label_tag :password
+    = password_field_tag :password, params[:password], :autocapitalize => 'off', :autocorrect => 'off', :spellcheck => 'false', :size => 30, :class => 'email_pwd txt'
+
+  p
+    = submit_tag 'Sign in', :class => 'button big blueish'
+
+  p Or use your smartphone to scan this code
+  = form_for @snap_login do |f|
+    input type="hidden" id="full_url" value=snap_login_url(@snap_login)
+    input type="hidden" id="same_origin_url" value=snap_login_url(@snap_login)
+  #qrcode
+    #code
+    p data-bind="text: url()"
+    p data-bind="text: 'auth challenge: ' + challenge()"
+    button data-bind="click: regenerate" refresh challenge
