@@ -19,4 +19,5 @@ class SnapLoginsController < ApplicationController
     @snap_login.destroy
     render json: {ok: 'yeah'}
   end
+
 end

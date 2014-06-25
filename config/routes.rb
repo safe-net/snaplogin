@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
 
-  get 'root/index'
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   root 'root#index'
+
+  get '/welcome' => 'root#welcome', as: :welcome
 
   resources :user_sessions, only: [:new, :create, :destroy] do
     collection do
@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   get '/saml/auth' => 'saml_idp#new'
   get '/saml/metadata' => 'saml_idp#show'
   post '/saml/auth' => 'saml_idp#create'
+
+
+  post '/devices/enroll/:token' => 'devices#enroll', as: :enroll
+  get '/devices/enroll/:token' => 'devices#check_enrollment'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
