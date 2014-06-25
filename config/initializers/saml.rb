@@ -66,7 +66,7 @@ m5MMDrpDrRnn65G8FgfRQ1fK8dIM43BZYmC/UJ5xyFkAgPVXcO1m6g==
 
   # Principal is passed in when you `encode_response`
   #
-  config.name_id_formats =
+  config.name_id.formats =
     {                         # All 2.0
       email_address: -> (principal) { principal.email },
       transient: -> (principal) { principal.persistence_token },
