@@ -22,8 +22,8 @@ class QRAuth
     @lchallenge = $('#same_origin_url').val()
     @qrcode     = ko.observable null
     @testingCount = 0
+    @refreshTimer = ko.observable null
     @init()
-
 
   getNewChallenge    : ->
     $.ajax
@@ -31,8 +31,6 @@ class QRAuth
       method: 'delete'
     .done ->
       location.reload()
-#    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 GMT"
-#    location.reload()
 
   refresh : ->
     @element.qrcode @challenge()
@@ -42,23 +40,27 @@ class QRAuth
     @getNewChallenge()
 
   checkForAuthenticated : ->
-#    @testingCount += 1
-#    if @testingCount >= 3
-#      location.reload()
-#      console.log 'reloaded'
     $.ajax
       url: @lchallenge
     .done (data) ->
       if data.email? and data.email.length > 0
         location.reload()
 
+  toggleReload : ->
+    if !@refreshTimer()
+      @startReload()
+    else
+      clearInterval @refreshTimer()
+      @refreshTimer false
 
+  startReload : ->
+    @refreshTimer setInterval(=>
+      @checkForAuthenticated()
+    , 1000)
 
   init    : =>
     @refresh()
-    setInterval(=>
-      @checkForAuthenticated()
-    , 1000)
+    @startReload()
 
 window.QRAuth = QRAuth
 
