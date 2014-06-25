@@ -42,5 +42,6 @@ gem 'authlogic'
 gem 'uuidtools'
 gem 'rails_12factor', group: :production
 gem 'slim'
+gem 'saml_idp'
 
 ruby '2.1.2'
