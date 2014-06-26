@@ -17,10 +17,11 @@
     = submit_tag 'Sign in', :class => 'button big blueish'
 
   p Or use your smartphone to scan this code
-  = form_for @snap_login do |f|
-    input type="hidden" id="full_url" value=snap_login_url(@snap_login)
+  input type="hidden" id="full_url" value=@snap_login.url
+  input type="hidden" id="check_url" value=snap_login_path(@snap_login)
+  input type="hidden" id="redirect_url" value=welcome_path
   #qrcode
     #code
-    p data-bind="text: url()"
-    p data-bind="text: 'auth challenge: ' + challenge()"
+    /p data-bind="text: ur"
+    /p data-bind="text: 'auth challenge: ' + challenge()"
     button data-bind="click: regenerate" refresh challenge

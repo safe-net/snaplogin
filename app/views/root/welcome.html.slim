@@ -2,15 +2,19 @@ h2 Welcome #{current_user.name}
 = button_to 'Log out', log_out_user_sessions_path, method: :get
 
 - if @snap_login
-  - enroll_url = enroll_url(token:@snap_login.token)
-  - same_origin_url = enroll_url
-  - if enroll_url.include?('localhost')
-    - enroll_url = request.protocol + @local_ip + ':' + request.port.to_s + enroll_path(@snap_login)
-  input type="hidden" id="full_url" value=enroll_url
+  input type="hidden" id="full_url" value=@snap_login.url
+  input type="hidden" id="check_url" value=snap_login_path(@snap_login)
+  input type="hidden" id="redirect_url" value=enroll_devices_url
 
   #qrcode
     #code
-    p data-bind="text: url()"
-    p data-bind="text: 'auth challenge: ' + challenge()"
-    = button_to 'Refresh Challenge', snap_login_path(@snap_login), method: :delete
-    /button data-bind="click: regenerate" refresh challenge
+    /p data-bind="text: url()"
+    p data-bind="text: 'auth challenge: ' + challenge_url"
+    /= button_to 'Refresh Challenge', snap_login_path(@snap_login), method: :delete
+    button data-bind="click: regenerate" refresh challenge
+
+h2 Devices
+p
+ul
+  - current_user.devices.each do |device|
+    li #{device.name} #{button_to 'Delete', device_path(device), method: :delete}

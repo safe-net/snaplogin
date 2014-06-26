@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/welcome' => 'root#welcome', as: :welcome
   get '/login' => 'root#login'
   get '/new' => 'root#new'
+  get '/snap' => 'root#snap_login', as: :snap
 
   resources :user_sessions, only: [:new, :create, :destroy] do
     collection do
@@ -24,8 +25,11 @@ Rails.application.routes.draw do
   post '/saml/auth' => 'saml_idp#create'
 
 
-  put '/devices/enroll/:token' => 'devices#enroll', as: :enroll
-  get '/devices/enroll/:token' => 'devices#check_enrollment'
+  resources :devices, only: [:destroy] do
+    collection do
+      get :enroll
+    end
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

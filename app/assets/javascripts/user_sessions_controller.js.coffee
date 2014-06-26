@@ -7,18 +7,13 @@ class QRAuth
 
   characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
-  _readChallengeFromPage = ->
-    $('#full_url').val()
-#    l = characters.length
-#    r = new String
-#    r = r + characters.charAt Math.floor Math.random() * l for [0..90]
-#    r
-
-
   constructor:  ->
     @element    = $('#code')
-    @url        = ko.observable location.href
-    @challenge  = ko.observable _readChallengeFromPage()
+#    @url = $('#redirect_url').val() || location.href
+#    @url        = ko.observable location.href
+    @challenge_url  = $('#full_url').val()
+    @check_url    = $('#check_url').val()
+    @redirect_url = $('#redirect_url').val()
     @qrcode     = ko.observable null
     @testingCount = 0
     @refreshTimer = ko.observable null
@@ -26,13 +21,13 @@ class QRAuth
 
   getNewChallenge    : ->
     $.ajax
-      url: @challenge()
+      url: @check_url
       method: 'delete'
     .done ->
       location.reload()
 
   refresh : ->
-    @element.qrcode @challenge()
+    @element.qrcode @challenge_url
 
   regenerate : ->
     $ @element .empty()
@@ -40,10 +35,13 @@ class QRAuth
 
   checkForAuthenticated : ->
     $.ajax
-      url: @challenge()
-    .done (data) ->
-      if data.email? and data.email.length > 0
-        location.reload()
+      url: @check_url
+    .done (data) =>
+      if data.snapped? and data.snapped
+        if @redirect_url
+          location.href = @redirect_url
+        else
+          location.reload()
 
   toggleReload : ->
     if !@refreshTimer()
