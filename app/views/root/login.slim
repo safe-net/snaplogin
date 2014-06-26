@@ -1,0 +1,39 @@
+.container
+  .row
+    - if current_user_session
+      h2 Welcome #{current_user.name}
+      = button_to 'Log out', log_out_user_sessions_path, method: :get
+    - else
+      .col-sm-4
+        h2 Login with username and password
+        = form_for @user_session do |f|
+          .form-group
+            = f.label :email
+            = f.text_field :email, class: 'form-control'
+          .form-group
+            = f.label :password
+            = f.password_field :password, class: 'form-control'
+          = f.submit 'Login', class: 'btn btn-default'
+      .col-sm-4
+        h2 Or use your smartphone to scan this code
+        .col-xs-3.col-xs-offset-4
+        #qrcode
+          #code
+          /p data-bind="text: url()"
+          /p data-bind="text: 'auth challenge: ' + challenge()"
+          button.btn.btn-default data-bind="click: regenerate" refresh QRCode
+          button.btn.btn-default data-bind="click: toggleReload, text: !refreshTimer() ? 'resume reload' : 'pause reload'"
+      .col-sm-4
+        h2 or with just your username
+        = form_for @snap_login do |f|
+          input type="hidden" id="full_url" value=snap_login_url(@snap_login)
+          input type="hidden" id="same_origin_url" value=snap_login_url(@snap_login)
+          .form-group
+            = f.label :token
+            = f.text_field :token, class: 'form-control', disabled: ''
+          .form-group
+            = f.label :email
+            = f.text_field :email, class: 'form-control'
+          = f.submit 'Login', class: 'btn btn-default'
+
+

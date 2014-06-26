@@ -1,5 +1,10 @@
 class RootController < ApplicationController
-  def index
+
+  def new
+  # put enrollment stuff here
+  end
+
+  def login
     token = cookies.signed[:snap_login]
     if token.present?
       @snap_login = SnapLogin.find_by_token(token)
@@ -18,6 +23,9 @@ class RootController < ApplicationController
       @local_ip = local_ip
       @user_session = UserSession.new
     end
+  end
+
+  def index
   end
 
   private

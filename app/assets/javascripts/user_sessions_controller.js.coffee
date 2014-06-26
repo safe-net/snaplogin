@@ -64,7 +64,7 @@ class QRAuth
 
 window.QRAuth = QRAuth
 
-$ ->
+$(document).on 'page:load', ->
   $('#qrcode').each ->
     view = new QRAuth
     ko.applyBindings view, this

@@ -2,3 +2,20 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.select-app-panel {
+  height: 50%;
+  margin-bottom: -56px;
+  float: left;
+
+  .col-sm-2 {
+    height: 112px;
+    position: relative;
+
+    a {
+      height: 112px;
+      padding: 16px;
+    }
+
+  }
+
+}
