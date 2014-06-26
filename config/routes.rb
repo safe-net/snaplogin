@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   get '/saml/metadata' => 'saml_idp#show'
   post '/saml/auth' => 'saml_idp#create'
 
+  get '/saml/snap' => 'saml_idp#snap', as: :saml_snap
+
 
   resources :devices, only: [:destroy] do
     collection do
