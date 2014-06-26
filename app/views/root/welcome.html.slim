@@ -2,10 +2,15 @@ h2 Welcome #{current_user.name}
 = button_to 'Log out', log_out_user_sessions_path, method: :get
 
 - if @snap_login
-  input type="hidden" id="full_url" value=enroll_url(token: @snap_login.token)
+  - enroll_url = enroll_url(token:@snap_login.token)
+  - same_origin_url = enroll_url
+  - if enroll_url.include?('localhost')
+    - enroll_url = request.protocol + @local_ip + ':' + request.port.to_s + enroll_path(@snap_login)
+  input type="hidden" id="full_url" value=enroll_url
 
   #qrcode
     #code
     p data-bind="text: url()"
     p data-bind="text: 'auth challenge: ' + challenge()"
-    button data-bind="click: regenerate" refresh challenge
+    = button_to 'Refresh Challenge', snap_login_path(@snap_login), method: :delete
+    /button data-bind="click: regenerate" refresh challenge

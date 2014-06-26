@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   post '/saml/auth' => 'saml_idp#create'
 
 
-  post '/devices/enroll/:token' => 'devices#enroll', as: :enroll
+  put '/devices/enroll/:token' => 'devices#enroll', as: :enroll
   get '/devices/enroll/:token' => 'devices#check_enrollment'
 
   # Example of regular route:
