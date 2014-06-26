@@ -60,7 +60,13 @@ class RootController < ApplicationController
     if @snap_login.nil?
       @snap_login = SnapLogin.new
       @snap_login.token = UUIDTools::UUID.random_create.to_s
-      @snap_login.url = enroll_url(token: @snap_login.token)
+      enroll_url = enroll_url(token:@snap_login.token)
+      same_origin_url = enroll_url
+      if enroll_url.include?('localhost')
+        enroll_url = request.protocol + local_ip + ':' + request.port.to_s + enroll_path(@snap_login)
+      end
+
+      @snap_login.url = enroll_url
       @snap_login.user = current_user
       @snap_login.save
       cookies.signed[:snap_login] = @snap_login.token
