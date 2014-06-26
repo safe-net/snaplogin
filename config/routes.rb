@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'root/index'
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -9,14 +7,13 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root 'root#index'
 
+  get '/welcome' => 'root#welcome', as: :welcome
+
   resources :user_sessions, only: [:new, :create, :destroy] do
     collection do
       get 'log_out'
     end
   end
-
-  get 'new' =>  'root#new'
-  get 'login' => 'root#login'
 
   resources :snap_logins, only: [:update, :show, :destroy]
 
@@ -25,6 +22,8 @@ Rails.application.routes.draw do
   post '/saml/auth' => 'saml_idp#create'
 
 
+  post '/devices/enroll/:token' => 'devices#enroll', as: :enroll
+  get '/devices/enroll/:token' => 'devices#check_enrollment'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

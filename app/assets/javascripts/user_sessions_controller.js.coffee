@@ -19,7 +19,6 @@ class QRAuth
     @element    = $('#code')
     @url        = ko.observable location.href
     @challenge  = ko.observable _readChallengeFromPage()
-    @lchallenge = $('#same_origin_url').val()
     @qrcode     = ko.observable null
     @testingCount = 0
     @refreshTimer = ko.observable null
@@ -27,7 +26,7 @@ class QRAuth
 
   getNewChallenge    : ->
     $.ajax
-      url: @lchallenge
+      url: @challenge()
       method: 'delete'
     .done ->
       location.reload()
@@ -41,7 +40,7 @@ class QRAuth
 
   checkForAuthenticated : ->
     $.ajax
-      url: @lchallenge
+      url: @challenge()
     .done (data) ->
       if data.email? and data.email.length > 0
         location.reload()

@@ -19,7 +19,6 @@
   p Or use your smartphone to scan this code
   = form_for @snap_login do |f|
     input type="hidden" id="full_url" value=snap_login_url(@snap_login)
-    input type="hidden" id="same_origin_url" value=snap_login_url(@snap_login)
   #qrcode
     #code
     p data-bind="text: url()"
