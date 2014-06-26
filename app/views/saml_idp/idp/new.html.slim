@@ -1,27 +1,54 @@
 - if @saml_idp_fail_msg
   #saml_idp_fail_msg class="flash error" #{@saml_idp_fail_msg}
 
-= form_tag do
+.container
+  .row
+    .col-sm-4
+      h2 Login with username and password
+      = form_tag
+        = hidden_field_tag('SAMLRequest', params[:SAMLRequest])
+        = hidden_field_tag('RelayState', params[:RelayState])
+        .form-group
+          = label_tag :email
+          = email_field_tag :email, class: 'form-control'
+        .form-group
+          = label_tag :password
+          = email_tag :password, class: 'form-control'
+        = submit_tag 'Login', class: 'btn btn-default'
+    .col-sm-4
+      h2 Or use your smartphone to scan this code
+      .col-xs-3.col-xs-offset-4
+      input type="hidden" id="full_url" value=@snap_login.url
+      input type="hidden" id="check_url" value=snap_login_path(@snap_login)
+      input type="hidden" id="redirect_url" value=snap_path
+      #qrcode
+        #code
+        /p data-bind="text: url()"
+        /p data-bind="text: 'auth challenge: ' + challenge()"
+        button.btn.btn-default data-bind="click: regenerate" refresh QRCode
+        button.btn.btn-default data-bind="click: toggleReload, text: !refreshTimer() ? 'resume reload' : 'pause reload'"
+
+/= form_tag do
   = hidden_field_tag('SAMLRequest', params[:SAMLRequest])
   = hidden_field_tag('RelayState', params[:RelayState])
 
-  p
+  /p
     = label_tag :email
     = email_field_tag :email, params[:email], :autocapitalize => 'off', :autocorrect => 'off', :autofocus => 'autofocus', :spellcheck => 'false', :size => 30, :class => 'email_pwd txt'
 
-  p
+  /p
     = label_tag :password
     = password_field_tag :password, params[:password], :autocapitalize => 'off', :autocorrect => 'off', :spellcheck => 'false', :size => 30, :class => 'email_pwd txt'
 
-  p
+  /p
     = submit_tag 'Sign in', :class => 'button big blueish'
 
-  p Or use your smartphone to scan this code
-  input type="hidden" id="full_url" value=@snap_login.url
-  input type="hidden" id="check_url" value=snap_login_path(@snap_login)
-  input type="hidden" id="redirect_url" value=welcome_path
-  #qrcode
-    #code
+  /p Or use your smartphone to scan this code
+  /input type="hidden" id="full_url" value=@snap_login.url
+  /input type="hidden" id="check_url" value=snap_login_path(@snap_login)
+  /input type="hidden" id="redirect_url" value=welcome_path
+  /#qrcode
+  /  #code
     /p data-bind="text: ur"
     /p data-bind="text: 'auth challenge: ' + challenge()"
-    button data-bind="click: regenerate" refresh challenge
+    /button data-bind="click: regenerate" refresh challenge
