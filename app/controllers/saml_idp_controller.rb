@@ -28,6 +28,16 @@ class SamlIdpController < ApplicationController
     if token.present?
       @snap_login = SnapLogin.find_by_token(token)
     end
+    if @snap_login && @snap_login.snapped
+      cookies.delete :snap_login
+      @snap_login.destroy
+      device = Device.find_by_public_key @snap_login.public_key
+      if device && device.user
+        @saml_response = idp_make_saml_response(device.user)
+        render template: 'saml_idp/idp/saml_post', layout: false
+        return
+      end
+    end
     if @snap_login.nil?
       @snap_login = SnapLogin.new
       @snap_login.token = UUIDTools::UUID.random_create.to_s
@@ -38,14 +48,6 @@ class SamlIdpController < ApplicationController
       @snap_login.url = enroll_url
       @snap_login.save
       cookies.signed[:snap_login] = @snap_login.token
-    elsif @snap_login.snapped
-      device = Device.find_by_public_key @snap_login.public_key
-      if device && device.user
-        @saml_response = idp_make_saml_response(device.user)
-        render template: 'saml_idp/idp/saml_post', layout: false
-        return
-      end
-
     end
 
     render template: 'saml_idp/idp/new'
