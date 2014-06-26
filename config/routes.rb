@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   root 'root#index'
 
   get '/welcome' => 'root#welcome', as: :welcome
+  get '/login' => 'root#login'
+  get '/new' => 'root#new'
 
   resources :user_sessions, only: [:new, :create, :destroy] do
     collection do
