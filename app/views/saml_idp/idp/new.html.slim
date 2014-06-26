@@ -10,17 +10,17 @@
         = hidden_field_tag('RelayState', params[:RelayState])
         .form-group
           = label_tag :email
-          = email_field_tag :email, class: 'form-control'
+          = email_field_tag :email, params[:email], class: 'form-control'
         .form-group
           = label_tag :password
-          = email_tag :password, class: 'form-control'
+          = password_field_tag :password, params[:password], class: 'form-control'
         = submit_tag 'Login', class: 'btn btn-default'
     .col-sm-4
       h2 Or use your smartphone to scan this code
       .col-xs-3.col-xs-offset-4
       input type="hidden" id="full_url" value=@snap_login.url
       input type="hidden" id="check_url" value=snap_login_path(@snap_login)
-      input type="hidden" id="redirect_url" value=snap_path
+      /input type="hidden" id="redirect_url" value=saml_snap_path
       #qrcode
         #code
         /p data-bind="text: url()"
