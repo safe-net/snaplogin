@@ -1,4 +1,5 @@
 class RootController < ApplicationController
+  include RootHelper
 
   def new
     #put enrollment of new users here
@@ -60,6 +61,7 @@ class RootController < ApplicationController
       @snap_login = SnapLogin.new
       @snap_login.token = UUIDTools::UUID.random_create.to_s
       @snap_login.url = enroll_url(token: @snap_login.token)
+      @snap_login.user = current_user
       @snap_login.save
       cookies.signed[:snap_login] = @snap_login.token
     elsif @snap_login.email.present?
@@ -67,5 +69,8 @@ class RootController < ApplicationController
       @snap_login.destroy
       cookies.delete :snap_login
     end
+
+    @local_ip = local_ip
   end
+
 end
