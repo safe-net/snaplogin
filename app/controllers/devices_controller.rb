@@ -2,26 +2,30 @@ class DevicesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def enroll
-    pk = params[:public_key]
-    name = params[:device_name]
-    sig = params[:signature]
-    sl = SnapLogin.find_by_token(params[:token])
-    if sl && sl.verify_signature(sig, pk)
-      d = Device.new
-      d.name = name
-      d.public_key = pk
-      d.user = sl.user
-      d.save!
-      sl.email = sl.user.email
-      sl.save
-      head 201
-      return
+    redirect_to login_path unless current_user
+    token = cookies.signed[:snap_login]
+    snap_login = token.present? && SnapLogin.find_by_token(token)
+    cookies.delete :snap_login
+    if snap_login
+      snap_login.destroy
+      if snap_login.snapped
+        d = Device.new
+        d.name = snap_login.device_name
+        d.public_key = snap_login.public_key
+        d.user = current_user
+        d.save!
+      end
     end
-    head 404
+    redirect_to welcome_url
   end
 
-  def check_enrollment
-    @snap_login = SnapLogin.find_by_token(params[:token])
-    render json: {token: @snap_login.token, email: @snap_login.email}
+  def destroy
+    redirect_to login_path unless current_user
+    device = Device.find(params[:id])
+    if device
+      device.destroy
+    end
+    redirect_to welcome_url
   end
+
 end
