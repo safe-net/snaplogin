@@ -3,13 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .select-app-panel {
-  height: 50%;
-  margin-bottom: -56px;
-  float: left;
+//  height: 50%;
+//  margin-bottom: -56px;
+//  float: left;
 
   .col-sm-2 {
-    height: 112px;
-    position: relative;
+//    height: 112px;
+//    position: relative;
 
     a {
       height: 112px;
@@ -18,4 +18,14 @@
 
   }
 
+  .snap-login-image {
+    height: 114px;
+  }
+
+}
+
+.snap-login-logo-index {
+  width: 140px;
+  margin: 40px auto;
+  display: block;
 }

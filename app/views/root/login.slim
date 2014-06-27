@@ -1,4 +1,5 @@
 .container
+  = render partial: 'root/partials/requesting_title'
   .row
     .col-sm-4
       h2 Login with username and password
@@ -10,17 +11,5 @@
           = f.label :password
           = f.password_field :password, class: 'form-control'
         = f.submit 'Login', class: 'btn btn-default'
-    .col-sm-4
-      h2 Or use your smartphone to scan this code
-      .col-xs-3.col-xs-offset-4
-      input type="hidden" id="full_url" value=@snap_login.url
-      input type="hidden" id="check_url" value=snap_login_path(@snap_login)
-      input type="hidden" id="redirect_url" value=snap_path
-      #qrcode
-        #code
-        /p data-bind="text: url()"
-        /p data-bind="text: 'auth challenge: ' + challenge()"
-        button.btn.btn-default data-bind="click: regenerate" refresh QRCode
-        button.btn.btn-default data-bind="click: toggleReload, text: !refreshTimer() ? 'resume reload' : 'pause reload'"
-
-
+    =render partial: 'root/partials/smartphone_option'
+    =render partial: 'root/partials/google_maps'
