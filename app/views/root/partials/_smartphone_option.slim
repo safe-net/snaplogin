@@ -1,7 +1,5 @@
 .col-sm-4
   h2 Or use your smartphone to scan this code
   .col-xs-3.col-xs-offset-4
-  input type="hidden" id="full_url" value=@snap_login.url
-  input type="hidden" id="check_url" value=snap_login_path(@snap_login)
-  input type="hidden" id="redirect_url" value=snap_path
+
   =render partial: 'root/partials/qrcode'

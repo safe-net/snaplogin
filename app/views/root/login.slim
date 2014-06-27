@@ -11,5 +11,8 @@
           = f.label :password
           = f.password_field :password, class: 'form-control'
         = f.submit 'Login', class: 'btn btn-default'
+    input type="hidden" id="full_url" value=@snap_login.url
+    input type="hidden" id="check_url" value=snap_login_path(@snap_login)
+    input type="hidden" id="redirect_url" value=snap_path
     =render partial: 'root/partials/smartphone_option'
     =render partial: 'root/partials/google_maps'
