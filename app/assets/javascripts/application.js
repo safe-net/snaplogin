@@ -15,5 +15,6 @@
 //= require knockout
 //= require jquery.qrcode
 //= require qrcode
+//= require zlib_and_gzip.min
 //= require turbolinks
 //= require_tree .

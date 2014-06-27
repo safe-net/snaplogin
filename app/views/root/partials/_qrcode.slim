@@ -1,0 +1,6 @@
+#qrcode
+  #code
+  /p data-bind="text: url()"
+  /p data-bind="text: 'auth challenge: ' + challenge()"
+  button.btn.btn-default data-bind="click: regenerate" refresh QRCode
+  button.btn.btn-default data-bind="click: toggleReload, text: !refreshTimer() ? 'resume reload' : 'pause reload'"

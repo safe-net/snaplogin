@@ -1,20 +1,31 @@
-h2 Welcome #{current_user.name}
-= button_to 'Log out', log_out_user_sessions_path, method: :get
+.container
+  .row
+    h1 Welcome #{current_user.name}
+  .row style='margin-top: 30px;'
+    .col-sm-6
+      .col-sm-6
+        p Use your phone to log in from now on. Open Snap Login on your phone and point it at the code on the right
+      .col-sm-6
+        = image_tag 'iphone.png', style: 'height: 400px'
+    .col-sm-6
+      - if @snap_login
+        input type="hidden" id="full_url" value=@snap_login.url
+        input type="hidden" id="check_url" value=snap_login_path(@snap_login)
+        input type="hidden" id="redirect_url" value=enroll_devices_url
 
-- if @snap_login
-  input type="hidden" id="full_url" value=@snap_login.url
-  input type="hidden" id="check_url" value=snap_login_path(@snap_login)
-  input type="hidden" id="redirect_url" value=enroll_devices_url
-
-  #qrcode
-    #code
-    /p data-bind="text: url()"
-    p data-bind="text: 'auth challenge: ' + challenge_url"
-    /= button_to 'Refresh Challenge', snap_login_path(@snap_login), method: :delete
-    button data-bind="click: regenerate" refresh challenge
-
-h2 Devices
-p
-ul
-  - current_user.devices.each do |device|
-    li #{device.name} #{button_to 'Delete', device_path(device), method: :delete}
+        #qrcode
+          #code
+          /p data-bind="text: url()"
+          /p data-bind="text: 'auth challenge: ' + challenge_url"
+          /= button_to 'Refresh Challenge', snap_login_path(@snap_login), method: :delete
+          button.btn.btn-default data-bind="click: regenerate" Refresh
+  .row
+    h2 Enrolled Devices
+    ul.list-unstyled
+      - if current_user.devices.count == 0
+        li You have no enrolled devices
+      - else
+        - current_user.devices.each do |device|
+          li #{device.name} #{button_to 'Forget', device_path(device), method: :delete, class: 'btn btn-default'}
+  .row style='margin-top: 30px;'
+    = button_to 'Log out', log_out_user_sessions_path, method: :get, class: 'btn btn-default'

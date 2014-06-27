@@ -1,13 +1,14 @@
 .container
+  .jumbotron
+    = image_tag 'snaplogin.png', class: 'snap-login-logo-index'
+    .row
+      h1 Smartphone + SAML <small>A 2 day experiment </small>
+      p Using SAML and a smartphone we log in to SAML enabled apps.  An integration using SAML & Dropbox is implemented.  Log in to the Snap Login enrollment page using the snap login icon below.
+      p <small> This site and the integration is based on a 2 day hackathon by the SafeNet Labs team. </small>
   .row
-    = image_tag 'snaplogin.png'
-  .row
-    h1 Simple SAML Login <small> smartphone + saml. A 2 day experiment </small>
-    p Using SAML and a smartphone - can we log in to SAML enabled apps?  This site and the integration is based on a 2 day hackathon by the SafeNet Labs team.
-  .row
-    h2 Pick an app to log in to
+    h2.text-center style='margin-bottom: 30px' Apps
     .select-app-panel
       .col-sm-2
-        a.btn.btn-default href='#{login_path}' =image_tag 'snaplogin.png', class: 'img-responsive'
+        a href='#{login_path}' =image_tag 'snapicon.png', class: 'snap-login-image'
       .col-sm-2
-        a.btn.btn-default href='https://www.dropbox.com/sso/184229534' =image_tag 'db_logo_blue@2x.png', class: 'img-responsive'
+        a href='https://www.dropbox.com/sso/184229534' =image_tag 'db_logo_blue@2x.png', class: 'snap-login-image'

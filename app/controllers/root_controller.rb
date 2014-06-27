@@ -67,7 +67,7 @@ class RootController < ApplicationController
   end
 
   def welcome
-    head 404 unless current_user
+    render 'not_logged_in' unless current_user
     token = cookies.signed[:snap_login]
     if token.present?
       @snap_login = SnapLogin.find_by_token(token)

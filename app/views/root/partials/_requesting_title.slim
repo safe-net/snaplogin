@@ -1,0 +1,3 @@
+.row
+  - if @saml_request != nil
+    h1 Logging in to: #{@saml_request.instance_variable_get(:@content)}
